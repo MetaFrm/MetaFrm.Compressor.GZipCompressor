@@ -1,0 +1,47 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32519.379
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaFrm.Compressor.GZipCompressor(net6.0)", "MetaFrm.Compressor.GZipCompressor(net6.0)\MetaFrm.Compressor.GZipCompressor(net6.0).csproj", "{4CE00C62-BCEC-4F94-B649-E71FC7F970AD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{227FE174-CFA6-4366-BBFB-43708CC41454}"
+	ProjectSection(SolutionItems) = preProject
+		src\GZipCompressor.cs = src\GZipCompressor.cs
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{DFE12DB5-6610-47D6-A9E7-79D76E47CC36}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{E7A2E4D3-DCA2-4BE6-AB8E-7821F4C5F530}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\build.yml = .github\workflows\build.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루션 항목", "{C3C0FD3F-8DBE-48F3-9E6B-592BA318337A}"
+	ProjectSection(SolutionItems) = preProject
+		.gitignore = .gitignore
+		LICENSE.txt = LICENSE.txt
+		README.md = README.md
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4CE00C62-BCEC-4F94-B649-E71FC7F970AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4CE00C62-BCEC-4F94-B649-E71FC7F970AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4CE00C62-BCEC-4F94-B649-E71FC7F970AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4CE00C62-BCEC-4F94-B649-E71FC7F970AD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{E7A2E4D3-DCA2-4BE6-AB8E-7821F4C5F530} = {DFE12DB5-6610-47D6-A9E7-79D76E47CC36}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {46F79DC6-17DB-4C89-B956-7C82AB234978}
+	EndGlobalSection
+EndGlobal
