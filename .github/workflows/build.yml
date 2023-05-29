@@ -13,7 +13,7 @@ jobs:
       DLL_ID: 17
       DLL_PATH: "MetaFrm.Compressor.GZipCompressor(net6.0)/bin/Release/net6.0/MetaFrm.Compressor.GZipCompressor.dll"
       UPLOAD_MODURE: "Y"
-      PUSH_NUGET: "Y"
+      PUSH_NUGET: "N"
       METAFRM_UPLOADMODULE_URL: "https://download.metafrm.net/github/MetaFrameworkManagementSystemUploadModule.zip"
       METAFRM_UPLOADMODULE_ZIP: "temp/MetaFrameworkManagementSystemUploadModule.zip"
       METAFRM_UPLOADMODULE_FILE: "temp/MetaFrameworkManagementSystemUploadModule.dll"
