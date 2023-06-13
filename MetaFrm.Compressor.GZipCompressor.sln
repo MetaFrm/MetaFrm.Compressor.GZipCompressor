@@ -14,7 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{DFE1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{E7A2E4D3-DCA2-4BE6-AB8E-7821F4C5F530}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\build.yml = .github\workflows\build.yml
+		.github\workflows\build_6.0.yml = .github\workflows\build_6.0.yml
+		.github\workflows\build_7.0.yml = .github\workflows\build_7.0.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루션 항목", "{C3C0FD3F-8DBE-48F3-9E6B-592BA318337A}"
