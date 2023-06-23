@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
     <RootNamespace>MetaFrm</RootNamespace>
@@ -16,38 +15,27 @@
     <PackageProjectUrl>https://github.com/MetaFrm/MetaFrm.Compressor.GZipCompressor</PackageProjectUrl>
     <RepositoryUrl>https://github.com/MetaFrm/MetaFrm.Compressor.GZipCompressor</RepositoryUrl>
     <PackageTags>meta;framework;dotnet;maui;</PackageTags>
-	
-	<SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss:fffZ"))</SourceRevisionId>
-	
-	<ApplicationIcon>icon.ico</ApplicationIcon>
-	
-	<Title>Meta Framework Compressor GZipCompressor</Title>
-	
-	<Product>Meta Framework Compressor GZipCompressor</Product>
-	
-	<Description>Meta Framework
+    <SourceRevisionId>build$([System.DateTime]::UtcNow.ToString("yyyy-MM-ddTHH:mm:ss:fffZ"))</SourceRevisionId>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+    <Title>Meta Framework Compressor GZipCompressor</Title>
+    <Product>Meta Framework Compressor GZipCompressor</Product>
+    <Description>Meta Framework
 (Multi platform &amp; Meta management)</Description>
-	
-	<PackageIcon>icon.png</PackageIcon>
+    <PackageIcon>icon.png</PackageIcon>
   </PropertyGroup>
-
   <ItemGroup>
     <Compile Include="..\src\GZipCompressor.cs" Link="GZipCompressor.cs" />
   </ItemGroup>
-
   <ItemGroup>
     <Content Include="icon.ico" />
   </ItemGroup>
-
   <ItemGroup>
     <PackageReference Include="MetaFrm.Core.net6.0" Version="6.0.0.42" />
   </ItemGroup>
-
   <ItemGroup>
     <None Update="icon.png">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
   </ItemGroup>
-
 </Project>
