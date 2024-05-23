@@ -9,6 +9,7 @@ namespace MetaFrm.Compressor
     /// </summary>
     public class GZipCompressor : ICompress, ICompressAsync, IDecompress, IDecompressAsync
     {
+        readonly System.Text.Json.JsonSerializerOptions JsonSerializerOptions = new() { WriteIndented = true, IncludeFields = true };
         byte[] ICompress.Compress(byte[] source)
         {
             byte[] compressedByte;
@@ -32,11 +33,10 @@ namespace MetaFrm.Compressor
         }
         byte[] ICompress.Compress<TValue>(TValue source)
         {
-            if (source is DataSet set)
-                set.RemotingFormat = SerializationFormat.Binary;
+            //if (source is DataSet set)
+            //    set.RemotingFormat = SerializationFormat.Binary;
 
-            var options = new System.Text.Json.JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
-            return ((ICompress)this).Compress(System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(source, options));
+            return ((ICompress)this).Compress(System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(source, this.JsonSerializerOptions));
         }
         string ICompress.CompressToString<TValue>(TValue source)
         {
@@ -74,11 +74,10 @@ namespace MetaFrm.Compressor
         }
         async Task<byte[]> ICompressAsync.CompressAsync<TValue>(TValue source)
         {
-            if (source is DataSet set)
-                set.RemotingFormat = SerializationFormat.Binary;
+            //if (source is DataSet set)
+            //    set.RemotingFormat = SerializationFormat.Binary;
 
-            var options = new System.Text.Json.JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
-            return await ((ICompressAsync)this).CompressAsync(System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(source, options));
+            return await ((ICompressAsync)this).CompressAsync(System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(source, this.JsonSerializerOptions));
         }
         async Task<string> ICompressAsync.CompressToStringAsync<TValue>(TValue source)
         {
@@ -143,9 +142,7 @@ namespace MetaFrm.Compressor
 
             var utf8Reader = new System.Text.Json.Utf8JsonReader(decompressedByte);
 
-            var options = new System.Text.Json.JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
-
-            TValue? value = System.Text.Json.JsonSerializer.Deserialize<TValue>(ref utf8Reader, options);
+            TValue? value = System.Text.Json.JsonSerializer.Deserialize<TValue>(ref utf8Reader, this.JsonSerializerOptions);
 
             if (value != null)
                 return value;
@@ -213,9 +210,7 @@ namespace MetaFrm.Compressor
             await memoryStream.WriteAsync(decompressedByte.AsMemory(0, decompressedByte.Length));
             memoryStream.Position = 0;
 
-            var options = new System.Text.Json.JsonSerializerOptions { WriteIndented = true, IncludeFields = true };
-
-            TValue? value = await System.Text.Json.JsonSerializer.DeserializeAsync<TValue>(memoryStream, options);
+            TValue? value = await System.Text.Json.JsonSerializer.DeserializeAsync<TValue>(memoryStream, this.JsonSerializerOptions);
 
             if (value != null)
                 return value;
