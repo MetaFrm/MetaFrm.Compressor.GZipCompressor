@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32519.379
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaFrm.Compressor.GZipCompressor(net6.0)", "MetaFrm.Compressor.GZipCompressor(net6.0)\MetaFrm.Compressor.GZipCompressor(net6.0).csproj", "{4CE00C62-BCEC-4F94-B649-E71FC7F970AD}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{227FE174-CFA6-4366-BBFB-43708CC41454}"
 	ProjectSection(SolutionItems) = preProject
 		src\GZipCompressor.cs = src\GZipCompressor.cs
@@ -14,9 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{DFE1
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{E7A2E4D3-DCA2-4BE6-AB8E-7821F4C5F530}"
 	ProjectSection(SolutionItems) = preProject
-		.github\workflows\build_6.0.yml = .github\workflows\build_6.0.yml
-		.github\workflows\build_7.0.yml = .github\workflows\build_7.0.yml
 		.github\workflows\build_8.0.yml = .github\workflows\build_8.0.yml
+		.github\workflows\build_9.0.yml = .github\workflows\build_9.0.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루션 항목", "{C3C0FD3F-8DBE-48F3-9E6B-592BA318337A}"
@@ -26,9 +23,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "솔루션 항목", "솔루�
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaFrm.Compressor.GZipCompressor(net7.0)", "MetaFrm.Compressor.GZipCompressor(net7.0)\MetaFrm.Compressor.GZipCompressor(net7.0).csproj", "{B5D37A73-7ABD-41EE-B452-4CAFD2846072}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MetaFrm.Compressor.GZipCompressor(net8.0)", "MetaFrm.Compressor.GZipCompressor(net8.0)\MetaFrm.Compressor.GZipCompressor(net8.0).csproj", "{496AB152-8039-4AAA-80BC-87874785DFE5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MetaFrm.Compressor.GZipCompressor(net9.0)", "MetaFrm.Compressor.GZipCompressor(net9.0)\MetaFrm.Compressor.GZipCompressor(net9.0).csproj", "{A905A3E1-B438-490C-AFE7-C056E60148B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -36,18 +33,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{4CE00C62-BCEC-4F94-B649-E71FC7F970AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4CE00C62-BCEC-4F94-B649-E71FC7F970AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4CE00C62-BCEC-4F94-B649-E71FC7F970AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4CE00C62-BCEC-4F94-B649-E71FC7F970AD}.Release|Any CPU.Build.0 = Release|Any CPU
-		{B5D37A73-7ABD-41EE-B452-4CAFD2846072}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{B5D37A73-7ABD-41EE-B452-4CAFD2846072}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{B5D37A73-7ABD-41EE-B452-4CAFD2846072}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{B5D37A73-7ABD-41EE-B452-4CAFD2846072}.Release|Any CPU.Build.0 = Release|Any CPU
 		{496AB152-8039-4AAA-80BC-87874785DFE5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{496AB152-8039-4AAA-80BC-87874785DFE5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{496AB152-8039-4AAA-80BC-87874785DFE5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{496AB152-8039-4AAA-80BC-87874785DFE5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A905A3E1-B438-490C-AFE7-C056E60148B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A905A3E1-B438-490C-AFE7-C056E60148B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A905A3E1-B438-490C-AFE7-C056E60148B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A905A3E1-B438-490C-AFE7-C056E60148B2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
