@@ -1,14 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net10.0</TargetFramework>
     <RootNamespace>MetaFrm</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <AssemblyName>MetaFrm.Compressor.GZipCompressor</AssemblyName>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageId>MetaFrm.Compressor.GZipCompressor.net9.0</PackageId>
-    <Version>9.0.4.70</Version>
+    <PackageId>MetaFrm.Compressor.GZipCompressor.net10.0</PackageId>
+    <Version>10.0.0.0</Version>
     <Authors>dsun</Authors>
     <Company>Meta Framework</Company>
     <Copyright>Copyright 2025. dsun all rights reserved.</Copyright>
@@ -34,7 +34,7 @@
     <Content Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="MetaFrm.Core.net9.0" Version="9.0.4.70" />
+    <PackageReference Include="MetaFrm.Core.net10.0" Version="10.0.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Include="icon.png">
