@@ -1,5 +1,4 @@
-﻿using System.Data;
-using System.IO.Compression;
+﻿using System.IO.Compression;
 using System.Text;
 
 namespace MetaFrm.Compressor
@@ -7,227 +6,124 @@ namespace MetaFrm.Compressor
     /// <summary>
     /// GZipCompressor
     /// </summary>
-    public class GZipCompressor : ICompress, ICompressAsync, IDecompress, IDecompressAsync
+    public class GZipCompressor : ICompressor
     {
-        readonly System.Text.Json.JsonSerializerOptions JsonSerializerOptions = new() { WriteIndented = true, IncludeFields = true };
-        byte[] ICompress.Compress(byte[] source)
+        static readonly System.Text.Json.JsonSerializerOptions JsonSerializerOptions = new() { WriteIndented = false };
+        byte[] ICompressor.Compress(byte[] source)
         {
-            byte[] compressedByte;
-
-            using (MemoryStream memoryStream = new())
-            {
-                using (Stream stream = new GZipStream(memoryStream, CompressionMode.Compress, true))
-                {
-                    stream.Write(source, 0, source.Length);
-                    stream.Close();
-                }
-
-                compressedByte = new byte[memoryStream.Length];
-
-                memoryStream.Position = 0;
-                memoryStream.Read(compressedByte, 0, (int)memoryStream.Length);
-                memoryStream.Close();
-            }
-
-            return compressedByte;
-        }
-        byte[] ICompress.Compress<TValue>(TValue source)
-        {
-            //if (source is DataSet set)
-            //    set.RemotingFormat = SerializationFormat.Binary;
-
-            return ((ICompress)this).Compress(System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(source, this.JsonSerializerOptions));
-        }
-        string ICompress.CompressToString<TValue>(TValue source)
-        {
-            return Convert.ToBase64String(((ICompress)this).Compress(source));
-        }
-        string ICompress.CompressToString(string source)
-        {
-            byte[] compressedByte;
-
-            compressedByte = ((ICompress)this).Compress(Encoding.Default.GetBytes(source));
-
-            return Convert.ToBase64String(compressedByte);
-        }
-
-        async Task<byte[]> ICompressAsync.CompressAsync(byte[] source)
-        {
-            byte[] compressedByte;
-
-            using (MemoryStream memoryStream = new())
-            {
-                using (Stream stream = new GZipStream(memoryStream, CompressionMode.Compress, true))
-                {
-                    await stream.WriteAsync(source.AsMemory(0, source.Length));
-                    stream.Close();
-                }
-
-                compressedByte = new byte[memoryStream.Length];
-
-                memoryStream.Position = 0;
-                await memoryStream.ReadAsync(compressedByte.AsMemory(0, (int)memoryStream.Length));
-                memoryStream.Close();
-            }
-
-            return compressedByte;
-        }
-        async Task<byte[]> ICompressAsync.CompressAsync<TValue>(TValue source)
-        {
-            //if (source is DataSet set)
-            //    set.RemotingFormat = SerializationFormat.Binary;
-
-            return await ((ICompressAsync)this).CompressAsync(System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(source, this.JsonSerializerOptions));
-        }
-        async Task<string> ICompressAsync.CompressToStringAsync<TValue>(TValue source)
-        {
-            byte[] compressedByte;
-
-            compressedByte = await ((ICompressAsync)this).CompressAsync(source);
-
-            return Convert.ToBase64String(compressedByte);
-        }
-        async Task<string> ICompressAsync.CompressToStringAsync(string source)
-        {
-            byte[] compressedByte;
-
-            compressedByte = await ((ICompressAsync)this).CompressAsync(UTF8Encoding.Default.GetBytes(source));
-
-            return Convert.ToBase64String(compressedByte);
-        }
-
-        byte[] IDecompress.Decompress(byte[] source)
-        {
-            byte[] decompressedByte;
-            int readBytes;
-
-            using (MemoryStream sourceMemoryStream = new(source))
-            {
-                using (MemoryStream resultMemoryStream = new())
-                {
-                    using (Stream stream = new GZipStream(sourceMemoryStream, CompressionMode.Decompress))
-                    {
-                        sourceMemoryStream.Seek(0, 0);
-                        decompressedByte = new byte[source.Length];
-
-                        while (true)
-                        {
-                            readBytes = stream.Read(decompressedByte, 0, decompressedByte.Length);
-
-                            if (readBytes < 1)
-                                break;
-
-                            resultMemoryStream.Write(decompressedByte, 0, readBytes);
-                        }
-
-                        stream.Close();
-                    }
-
-                    decompressedByte = new byte[resultMemoryStream.Length];
-
-                    resultMemoryStream.Seek(0, 0);
-                    resultMemoryStream.Read(decompressedByte, 0, decompressedByte.Length);
-                    resultMemoryStream.Close();
-                }
-                sourceMemoryStream.Close();
-            }
-
-            return decompressedByte;
-        }
-        TValue IDecompress.Decompress<TValue>(byte[] source)
-        {
-            byte[] decompressedByte;
-
-            decompressedByte = ((IDecompress)this).Decompress(source);
-
-            var utf8Reader = new System.Text.Json.Utf8JsonReader(decompressedByte);
-
-            TValue? value = System.Text.Json.JsonSerializer.Deserialize<TValue>(ref utf8Reader, this.JsonSerializerOptions);
-
-            if (value != null)
-                return value;
-            else
-                throw new MetaFrmException("Object is null.");
-        }
-        TValue IDecompress.DecompressFromString<TValue>(string source)
-        {
-            return ((IDecompress)this).Decompress<TValue>(Convert.FromBase64String(source));
-        }
-        string IDecompress.DecompressFromString(string source)
-        {
-            byte[] decompressedByte;
-
-            decompressedByte = ((IDecompress)this).Decompress(Convert.FromBase64String(source));
-
-            return Encoding.Default.GetString(decompressedByte);
-        }
-
-        async Task<byte[]> IDecompressAsync.DecompressAsync(byte[] source)
-        {
-            byte[] decompressedByte;
-            int readBytes;
-
-            using (MemoryStream sourceMemoryStream = new(source))
-            {
-                using (MemoryStream resultMemoryStream = new())
-                {
-                    using (Stream stream = new GZipStream(sourceMemoryStream, CompressionMode.Decompress))
-                    {
-                        sourceMemoryStream.Seek(0, 0);
-                        decompressedByte = new byte[source.Length];
-
-                        while (true)
-                        {
-                            readBytes = await stream.ReadAsync(decompressedByte.AsMemory(0, decompressedByte.Length));
-
-                            if (readBytes < 1)
-                                break;
-
-                            await resultMemoryStream.WriteAsync(decompressedByte.AsMemory(0, readBytes));
-                        }
-
-                        stream.Close();
-                    }
-
-                    decompressedByte = new byte[resultMemoryStream.Length];
-
-                    resultMemoryStream.Seek(0, 0);
-                    readBytes = await resultMemoryStream.ReadAsync(decompressedByte.AsMemory(0, decompressedByte.Length));
-                    resultMemoryStream.Close();
-                }
-                sourceMemoryStream.Close();
-            }
-
-            return decompressedByte;
-        }
-        async Task<TValue> IDecompressAsync.DecompressAsync<TValue>(byte[] source)
-        {
-            byte[] decompressedByte;
-
-            decompressedByte = await ((IDecompressAsync)this).DecompressAsync(source);
-
             using MemoryStream memoryStream = new();
-            await memoryStream.WriteAsync(decompressedByte.AsMemory(0, decompressedByte.Length));
-            memoryStream.Position = 0;
+            using (GZipStream gzip = new(memoryStream, CompressionMode.Compress, true))
+            {
+                gzip.Write(source);
+                gzip.Flush();// 의도 표현
+            }
 
-            TValue? value = await System.Text.Json.JsonSerializer.DeserializeAsync<TValue>(memoryStream, this.JsonSerializerOptions);
+            return memoryStream.ToArray();
+        }
+        byte[] ICompressor.Compress<TValue>(TValue source)
+        {
+            return ((ICompressor)this).Compress(System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(source, JsonSerializerOptions));
+        }
+        string ICompressor.CompressToString<TValue>(TValue source)
+        {
+            return Convert.ToBase64String(((ICompressor)this).Compress(source));
+        }
+        string ICompressor.CompressToString(string source)
+        {
+            return Convert.ToBase64String(((ICompressor)this).Compress(Encoding.UTF8.GetBytes(source)));
+        }
+
+        async Task<byte[]> ICompressor.CompressAsync(byte[] source)
+        {
+            using MemoryStream memoryStream = new();
+            using (GZipStream gzip = new(memoryStream, CompressionMode.Compress, true))
+            {
+                await gzip.WriteAsync(source.AsMemory(0));
+                gzip.Flush();// 의도 표현
+            }
+
+            return memoryStream.ToArray();
+        }
+        async Task<byte[]> ICompressor.CompressAsync<TValue>(TValue source)
+        {
+            return await ((ICompressor)this).CompressAsync(System.Text.Json.JsonSerializer.SerializeToUtf8Bytes(source, JsonSerializerOptions));
+        }
+        async Task<string> ICompressor.CompressToStringAsync<TValue>(TValue source)
+        {
+            return Convert.ToBase64String(await ((ICompressor)this).CompressAsync(source));
+        }
+        async Task<string> ICompressor.CompressToStringAsync(string source)
+        {
+            return Convert.ToBase64String(await ((ICompressor)this).CompressAsync(Encoding.UTF8.GetBytes(source)));
+        }
+
+
+        byte[] ICompressor.Decompress(byte[] source)
+        {
+            byte[] buffer = new byte[8192];
+            int read;
+
+            using MemoryStream sourceMemoryStream = new(source);
+            using MemoryStream resultMemoryStream = new();
+            using (GZipStream gzip = new(sourceMemoryStream, CompressionMode.Decompress))
+            {
+                while ((read = gzip.Read(buffer, 0, buffer.Length)) > 0)
+                    resultMemoryStream.Write(buffer, 0, read);
+            }
+
+            return resultMemoryStream.ToArray();
+        }
+        TValue ICompressor.Decompress<TValue>(byte[] source)
+        {
+            TValue? value = System.Text.Json.JsonSerializer.Deserialize<TValue>(
+                ((ICompressor)this).Decompress(source), JsonSerializerOptions);
 
             if (value != null)
                 return value;
             else
-                throw new MetaFrmException("Object is null.");
+                throw new MetaFrmException($"Failed to deserialize {typeof(TValue).FullName}");
         }
-        async Task<TValue> IDecompressAsync.DecompressFromStringAsync<TValue>(string source)
+        TValue ICompressor.DecompressFromString<TValue>(string source)
         {
-            return await ((IDecompressAsync)this).DecompressAsync<TValue>(Convert.FromBase64String(source));
+            return ((ICompressor)this).Decompress<TValue>(Convert.FromBase64String(source));
         }
-        async Task<string> IDecompressAsync.DecompressFromStringAsync(string source)
+        string ICompressor.DecompressFromString(string source)
         {
-            byte[] decompressedByte;
+            return Encoding.UTF8.GetString(((ICompressor)this).Decompress(Convert.FromBase64String(source)));
+        }
 
-            decompressedByte = await ((IDecompressAsync)this).DecompressAsync(Convert.FromBase64String(source));
+        async Task<byte[]> ICompressor.DecompressAsync(byte[] source)
+        {
+            byte[] buffer = new byte[8192];
+            int read;
 
-            return Encoding.Default.GetString(decompressedByte);
+            using MemoryStream sourceMemoryStream = new(source);
+            using MemoryStream resultMemoryStream = new();
+            using (GZipStream gzip = new(sourceMemoryStream, CompressionMode.Decompress))
+            {
+                while ((read = await gzip.ReadAsync(buffer.AsMemory())) > 0)
+                    await resultMemoryStream.WriteAsync(buffer.AsMemory(0, read));
+            }
+
+            return resultMemoryStream.ToArray();
+        }
+        async Task<TValue> ICompressor.DecompressAsync<TValue>(byte[] source)
+        {
+            TValue? value = System.Text.Json.JsonSerializer.Deserialize<TValue>(
+                await ((ICompressor)this).DecompressAsync(source), JsonSerializerOptions);
+
+            if (value != null)
+                return value;
+            else
+                throw new MetaFrmException($"Failed to deserialize {typeof(TValue).FullName}");
+        }
+        async Task<TValue> ICompressor.DecompressFromStringAsync<TValue>(string source)
+        {
+            return await ((ICompressor)this).DecompressAsync<TValue>(Convert.FromBase64String(source));
+        }
+        async Task<string> ICompressor.DecompressFromStringAsync(string source)
+        {
+            return Encoding.UTF8.GetString(await ((ICompressor)this).DecompressAsync(Convert.FromBase64String(source)));
         }
     }
 }
